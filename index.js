@@ -6,6 +6,7 @@ createApp({
             pokemons: [],
             loading: true,
             searchText: '',
+            searchedPokemon: null, // Para armazenar o Pokémon buscado
             nextPage: 1,
         }
     },
@@ -26,7 +27,7 @@ createApp({
     methods: {
         async callAPI() {
             try {
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?offset=${(this.nextPage - 1) * 151}&limit=${151}`)
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?offset=${(this.nextPage - 1) * 151}&limit=${151}`);
                 const data = await response.json();
                 const pokemonDetailsPromises = data.results.map(async pokemon => this.fetchPokemonData(pokemon.url));
                 const pokemonDetails = await Promise.all(pokemonDetailsPromises);
@@ -93,6 +94,23 @@ createApp({
                 dragon: '#3263cc',
             };
             return typeColorMap[type] || '#A9A9A9';  // Cor padrão se o tipo não for encontrado
+        },
+        async searchPokemon() {
+            try {
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${this.searchText.toLowerCase()}`);
+                if (!response.ok) throw new Error('Pokémon não encontrado');
+                const data = await response.json();
+                this.searchedPokemon = {
+                    id: data.id,
+                    name: data.name,
+                    weight: data.weight,
+                    types: data.types,
+                    sprites: data.sprites
+                };
+            } catch (e) {
+                console.error(e);
+                alert('Pokémon não encontrado. Tente novamente.');
+            }
         }
     }
 }).mount("#app");
