@@ -8,7 +8,7 @@ createApp({
             searchText: '',
             searchedPokemon: null, // Para armazenar o Pokémon buscado
             nextPage: 1,
-        }
+        };
     },
     computed: {
         filteredPokemons() {
@@ -21,13 +21,13 @@ createApp({
         this.callAPI();
         window.addEventListener('scroll', this.handleScroll);
     },
-    destroyed() {
+    beforeUnmount() {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
         async callAPI() {
             try {
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?offset=${(this.nextPage - 1) * 151}&limit=${151}`);
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?offset=${(this.nextPage - 1) * 151}&limit=151`);
                 const data = await response.json();
                 const pokemonDetailsPromises = data.results.map(async pokemon => this.fetchPokemonData(pokemon.url));
                 const pokemonDetails = await Promise.all(pokemonDetailsPromises);
@@ -55,7 +55,7 @@ createApp({
             }
         },
         handleScroll() {
-            const bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+            const bottomOfWindow = window.innerHeight + window.scrollY >= document.documentElement.offsetHeight - 10;
             if (bottomOfWindow && !this.loading) {
                 this.loading = true;
                 this.callAPI();
@@ -93,7 +93,7 @@ createApp({
                 fairy: '#f040f3',
                 dragon: '#3263cc',
             };
-            return typeColorMap[type] || '#A9A9A9';  // Cor padrão se o tipo não for encontrado
+            return typeColorMap[type] || '#A9A9A9'; // Cor padrão se o tipo não for encontrado
         },
         async searchPokemon() {
             if (!this.searchText) return; // Não busca se a barra de pesquisa estiver vazia
