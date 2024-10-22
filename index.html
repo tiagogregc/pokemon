@@ -8,25 +8,26 @@
 </head>
 <body>
 <div id="app">
-    <!-- Gameboy-like screen -->
-    <div class="gameboy-screen">
-        <div class="pokemon-display" v-if="searchedPokemon">
-            <p>{{ searchedPokemon.name }}</p>
-            <div class="pokemon-img">
-                <img :src="searchedPokemon.sprites.other.showdown.front_default">
-            </div>
-            <p>{{ searchedPokemon.types[0].type.name }}</p>
-            <p v-if="searchedPokemon.types.length > 1">{{ searchedPokemon.types[1].type.name }}</p>
-        </div>
-        <div v-else>
-            <p>Insira o nome de um Pokémon abaixo</p>
-        </div>
-    </div>
-
     <!-- Search form -->
     <div class="search-bar">
         <input type="text" placeholder="Digite o nome do Pokémon" v-model="searchText">
         <button @click="searchPokemon">Buscar</button>
+    </div>
+
+    <!-- Show searched Pokemon, if available -->
+    <div v-if="searchedPokemon">
+        <ul>
+            <li :style="getPokemonStyle(searchedPokemon)">
+                <div class="pokemon-card">
+                    <p>{{ searchedPokemon.name }}</p>
+                    <div class="pokemon-img">
+                        <img :src="searchedPokemon.sprites.other.showdown.front_default">
+                    </div>
+                    <p>{{ searchedPokemon.types[0].type.name }}</p>
+                    <p v-if="searchedPokemon.types.length > 1">{{ searchedPokemon.types[1].type.name }}</p>
+                </div>
+            </li>
+        </ul>
     </div>
 
     <!-- Pokémon list below -->
