@@ -96,6 +96,7 @@ createApp({
             return typeColorMap[type] || '#A9A9A9';  // Cor padrão se o tipo não for encontrado
         },
         async searchPokemon() {
+            if (!this.searchText) return; // Não busca se a barra de pesquisa estiver vazia
             try {
                 const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${this.searchText.toLowerCase()}`);
                 if (!response.ok) throw new Error('Pokémon não encontrado');
@@ -110,6 +111,7 @@ createApp({
             } catch (e) {
                 console.error(e);
                 alert('Pokémon não encontrado. Tente novamente.');
+                this.searchedPokemon = null; // Limpa a busca caso não encontre
             }
         }
     }
