@@ -49,7 +49,7 @@ createApp({
                     types: data.types,
                     sprites: data.sprites,
                     showDetails: false,
-                }
+                };
             } catch (e) {
                 console.error(e);
             }
@@ -113,6 +113,10 @@ createApp({
                 alert('Pokémon não encontrado. Tente novamente.');
                 this.searchedPokemon = null; // Limpa a busca caso não encontre
             }
+        },
+        clearSearch() {
+            this.searchText = '';
+            this.searchedPokemon = null; // Limpa o Pokémon buscado
         }
     }
 }).mount("#app");

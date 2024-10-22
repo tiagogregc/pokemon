@@ -1,38 +1,69 @@
 body {
     font-family: "Comic Sans MS", cursive;
-    background-color: #f5f5f5;
+    background-color: #f5f5f5; /* Cor de fundo atual */
+    background-image: url('background.jpg'); /* Adiciona a imagem de fundo */
+    background-size: cover; /* Faz com que a imagem cubra toda a área */
+    background-position: center; /* Centraliza a imagem */
+    background-attachment: fixed; /* Mantém a imagem fixa ao rolar */
     margin: 0;
+}
+
+.search-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 20px;
+}
+
+.rotom-img {
+    width: 500px; /* Aumenta o tamanho da imagem para 500px */
+    margin-bottom: 10px; /* Espaçamento abaixo da imagem */
 }
 
 .search-bar {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    align-items: center;
+    margin-bottom: 20px; /* Espaçamento abaixo da barra de busca */
 }
 
 .search-bar input {
     padding: 10px;
-    font-size: 16px;
-    margin-right: 10px;
+    border: 2px solid #900; /* Borda vermelha */
     border-radius: 5px;
-    border: 1px solid #ccc;
+    margin-right: 10px; /* Espaçamento entre o input e o botão */
+    font-size: 16px; /* Aumenta o tamanho da fonte */
 }
 
 .search-bar button {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 10px 15px;
+    background-color: #c27e10; /* Cor de fundo do botão */
+    color: #fff; /* Cor do texto */
+    border: none; /* Remove borda padrão */
+    border-radius: 5px; /* Cantos arredondados */
+    cursor: pointer; /* Mão ao passar o mouse */
+    transition: background-color 0.3s; /* Efeito de transição */
 }
 
-.pokemon-container {
-    margin-top: 30px;
+.search-bar button:hover {
+    background-color: #ba082a; /* Cor ao passar o mouse */
+}
+
+.info-box {
+    background-color: #ffcccc; /* Cor de fundo do retângulo */
+    border: 3px solid #900; /* Bordas vermelhas */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Efeito de sombra para 3D */
+    padding: 15px;
+    margin-top: 20px; /* Espaçamento acima do retângulo */
+    width: 80%; /* Largura do retângulo */
+    max-width: 600px; /* Largura máxima do retângulo */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinhamento à esquerda do texto */
+}
+
+.info-box p {
+    margin: 5px 0; /* Adiciona espaçamento entre os parágrafos */
 }
 
 ul {
@@ -58,4 +89,56 @@ li {
 
 .pokemon-img {
     width: 200px;
+}
+
+/* Definições de cor dos tipos de Pokémon */
+.fire { background-color: #c27e10; }
+.grass { background-color: #4CAF50; }
+.dragon { background-color: #3263cc; }
+.ice { background-color: #42bed3; }
+.fighting { background-color: #ba082a; }
+.ground { background-color: #9e7e52; }
+.bug { background-color: #98e880; }
+.normal { background-color: #A9A9A9; }
+.poison { background-color: #9e5cda; }
+.electric { background-color: #ffd365; }
+.rock { background-color: #897975; }
+.steel { background-color: #999999; }
+.psychic { background-color: #e39fa4; }
+.fairy { background-color: #f040f3; }
+.dark { background-color: #12124f; }
+.water { background-color: #00BFFF; }
+.flying { background-color: #23f1c7; }
+.ghost { background-color: #5626de; }
+
+/* Estilo para os botões */
+.btn {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    outline: none; /* Remove a borda padrão do botão */
+}
+
+/* Estilo específico para o botão de busca */
+.search-btn {
+    background-color: #4CAF50; /* Cor de fundo verde */
+    box-shadow: 0 4px 8px rgba(0, 128, 0, 0.3); /* Sombra verde */
+}
+
+/* Estilo específico para o botão de limpar */
+.clear-btn {
+    background-color: #f44336; /* Cor de fundo vermelha */
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3); /* Sombra vermelha */
+}
+
+/* Efeito 3D ao clicar */
+.btn:active {
+    transform: translateY(2px); /* Move o botão para baixo */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra mais suave ao clicar */
 }
