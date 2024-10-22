@@ -9,6 +9,13 @@ createApp({
             nextPage: 1,
         }
     },
+    computed: {
+        filteredPokemons() {
+            return this.pokemons.filter(pokemon =>
+                pokemon.name.toLowerCase().includes(this.searchText.toLowerCase())
+            );
+        }
+    },
     created() {
         this.callAPI();
         window.addEventListener('scroll', this.handleScroll);
@@ -22,18 +29,13 @@ createApp({
                 const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?offset=${(this.nextPage - 1) * 151}&limit=${151}`)
                 const data = await response.json();
                 const pokemonDetailsPromises = data.results.map(async pokemon => this.fetchPokemonData(pokemon.url));
-                //console.log(pokemonDetailsPromises)
                 const pokemonDetails = await Promise.all(pokemonDetailsPromises);
-                //console.log(pokemonDetails)\
                 this.pokemons = [...this.pokemons, ...pokemonDetails];
                 this.nextPage++;
-                //console.log(this.pokemons)
                 this.loading = false;
-
             } catch (error) {
                 console.error(error);
             }
-
         },
         async fetchPokemonData(url) {
             try {
@@ -47,7 +49,7 @@ createApp({
                     sprites: data.sprites,
                     showDetails: false,
                 }
-            } catch (e){
+            } catch (e) {
                 console.error(e);
             }
         },
@@ -57,31 +59,40 @@ createApp({
                 this.loading = true;
                 this.callAPI();
             }
-
         },
-        getTypeClass(type) {
-            const classTypeMap = {
-                fire: 'fire',
-                grass: 'grass',
-                water: 'water',
-                bug: 'bug',
-                normal: 'normal',
-                poison: 'poison',
-                electric: 'electric',
-                ground: 'ground',
-                ghost: 'ghost',
-                fighting: 'fighting',
-                psychic: 'psychic',
-                rock: 'rock',
-                ice: 'ice',
-                steel: 'steel',
-                dark: 'dark',
-                flying: 'flying',
-                fairy: 'fairy',
-                dragon: 'dragon',
+        getPokemonStyle(pokemon) {
+            if (pokemon.types.length === 1) {
+                return { backgroundColor: this.getTypeColor(pokemon.types[0].type.name) };
+            } else {
+                const color1 = this.getTypeColor(pokemon.types[0].type.name);
+                const color2 = this.getTypeColor(pokemon.types[1].type.name);
+                return {
+                    background: `linear-gradient(45deg, ${color1} 50%, ${color2} 50%)`
+                };
             }
-
-            return classTypeMap[type] || '';
+        },
+        getTypeColor(type) {
+            const typeColorMap = {
+                fire: '#c27e10',
+                grass: '#4CAF50',
+                water: '#00BFFF',
+                bug: '#98e880',
+                normal: '#A9A9A9',
+                poison: '#9e5cda',
+                electric: '#ffd365',
+                ground: '#9e7e52',
+                ghost: '#5626de',
+                fighting: '#ba082a',
+                psychic: '#e39fa4',
+                rock: '#897975',
+                ice: '#42bed3',
+                steel: '#999999',
+                dark: '#12124f',
+                flying: '#23f1c7',
+                fairy: '#f040f3',
+                dragon: '#3263cc',
+            };
+            return typeColorMap[type] || '#A9A9A9';  // Cor padrão se o tipo não for encontrado
         }
     }
 }).mount("#app");
